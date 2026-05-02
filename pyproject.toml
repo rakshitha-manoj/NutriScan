@@ -1,0 +1,82 @@
+[project]
+name = "nutriscan"
+version = "0.1.0"
+description = "Agentic Nutrition Planner — end-to-end AI system for fridge scanning, freshness estimation, portion sizing, and meal planning."
+readme = "README.md"
+license = "MIT"
+requires-python = ">= 3.11"
+authors = [{ name = "Rakshitha Manoj" }]
+
+dependencies = [
+    "fastapi ~= 0.115",
+    "uvicorn[standard] ~= 0.34",
+    "pydantic ~= 2.13",
+    "pydantic-settings ~= 2.9",
+    "pymongo ~= 4.17",
+    "torch ~= 2.7",
+    "open-clip-torch ~= 3.3",
+    "ultralytics ~= 8.4",
+    "opencv-python-headless ~= 4.11",
+    "langgraph ~= 0.4",
+    "langchain-core ~= 0.3",
+    "numpy ~= 2.2",
+    "Pillow ~= 11.2",
+    "python-multipart ~= 0.0.20",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest ~= 8.3",
+    "pytest-asyncio ~= 0.26",
+    "httpx ~= 0.28",
+    "ruff ~= 0.11",
+    "mypy ~= 1.20",
+    "pre-commit ~= 4.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["api", "db", "models", "agent"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["api", "db", "models", "agent"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "ultralytics.*",
+    "open_clip.*",
+    "cv2.*",
+    "langgraph.*",
+    "langchain_core.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
