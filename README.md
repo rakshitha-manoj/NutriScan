@@ -81,6 +81,27 @@ curl http://localhost:8000/health
 # {"status": "healthy", "version": "0.1.0", "db": "connected"}
 ```
 
+### Quickstart — Freshness Model
+
+```bash
+# 1. Download the Fruits Fresh-and-Rotten dataset
+uv run python -m data.download
+
+# 2. Extract CLIP ViT-B/32 embeddings (512-dim)
+uv run python -m models.freshness.preprocess
+
+# 3. Train the freshness MLP regressor
+uv run python -m models.freshness.train
+
+# 4. Run inference on a single image
+uv run python -c "
+from models.freshness import FreshnessInference
+engine = FreshnessInference('data/processed/freshness_best.pt')
+result = engine.predict('data/raw/freshapples/some_image.jpg')
+print(result)
+"
+```
+
 ## Project Structure
 
 ```
@@ -93,7 +114,13 @@ NutriScan/
 │   ├── models.py         # Pydantic v2 document schemas
 │   └── session.py        # AsyncMongoClient manager
 ├── models/               # ML model definitions
-│   ├── freshness/        # CLIP → freshness MLP
+│   ├── freshness/        # CLIP → freshness MLP (Phase 1)
+│   │   ├── dataset.py    # FreshnessDataset (fresh/rotten labels)
+│   │   ├── extractor.py  # CLIPExtractor (frozen ViT-B/32)
+│   │   ├── model.py      # FreshnessRegressor (MLP + MC Dropout)
+│   │   ├── train.py      # Training script
+│   │   ├── inference.py  # FreshnessInference entry point
+│   │   └── preprocess.py # Batch CLIP embedding extraction
 │   └── portion/          # Bounding-box → gram estimator
 ├── data/                 # Datasets (git-ignored)
 │   ├── raw/
@@ -112,7 +139,7 @@ NutriScan/
 | Phase | Description | Status |
 |-------|------------|--------|
 | **0** | Project scaffold, CI, Docker, schemas, health endpoint | ✅ Complete |
-| **1** | Freshness regression model (CLIP features → expiry) | ⬜ Pending |
+| **1** | Freshness regression model (CLIP features → expiry) | ✅ Complete |
 | **2** | Portion estimation pipeline (bbox → grams) | ⬜ Pending |
 | **3** | LangGraph agent (macro tracking, recipe scoring) | ⬜ Pending |
 | **4** | Full API routes + MongoDB CRUD | ⬜ Pending |
