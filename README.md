@@ -102,6 +102,18 @@ print(result)
 "
 ```
 
+### Quickstart -- Portion Estimation
+
+```bash
+uv run python -c "
+from models.portion import PortionEstimator
+est = PortionEstimator()
+results = est.estimate('data/raw/freshapples/some_image.jpg')
+for r in results:
+    print(f'{r.label}: {r.estimated_grams}g +/- {r.uncertainty_grams}g')
+"
+```
+
 ## Project Structure
 
 ```
@@ -114,14 +126,18 @@ NutriScan/
 │   ├── models.py         # Pydantic v2 document schemas
 │   └── session.py        # AsyncMongoClient manager
 ├── models/               # ML model definitions
-│   ├── freshness/        # CLIP → freshness MLP (Phase 1)
+│   ├── freshness/        # CLIP -> freshness MLP (Phase 1)
 │   │   ├── dataset.py    # FreshnessDataset (fresh/rotten labels)
 │   │   ├── extractor.py  # CLIPExtractor (frozen ViT-B/32)
 │   │   ├── model.py      # FreshnessRegressor (MLP + MC Dropout)
 │   │   ├── train.py      # Training script
 │   │   ├── inference.py  # FreshnessInference entry point
 │   │   └── preprocess.py # Batch CLIP embedding extraction
-│   └── portion/          # Bounding-box → gram estimator
+│   └── portion/          # Bbox -> gram estimator (Phase 2)
+│       ├── categories.py # FoodMeta lookup table (10 categories)
+│       ├── reference.py  # Reference object calibration
+│       ├── estimator.py  # PortionEstimator (YOLO + geometry)
+│       └── pipeline.py   # PortionPipeline (freshness + grams)
 ├── data/                 # Datasets (git-ignored)
 │   ├── raw/
 │   └── processed/
@@ -140,7 +156,7 @@ NutriScan/
 |-------|------------|--------|
 | **0** | Project scaffold, CI, Docker, schemas, health endpoint | ✅ Complete |
 | **1** | Freshness regression model (CLIP features → expiry) | ✅ Complete |
-| **2** | Portion estimation pipeline (bbox → grams) | ⬜ Pending |
+| **2** | Portion estimation pipeline (bbox -> grams) | ✅ Complete |
 | **3** | LangGraph agent (macro tracking, recipe scoring) | ⬜ Pending |
 | **4** | Full API routes + MongoDB CRUD | ⬜ Pending |
 | **5** | Integration tests, notebook demo, documentation | ⬜ Pending |
