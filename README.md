@@ -81,6 +81,59 @@ curl http://localhost:8000/health
 # {"status": "healthy", "version": "0.1.0", "db": "connected"}
 ```
 
+### Quickstart — Freshness Model
+
+```bash
+# 1. Download the Fruits Fresh-and-Rotten dataset
+uv run python -m data.download
+
+# 2. Extract CLIP ViT-B/32 embeddings (512-dim)
+uv run python -m models.freshness.preprocess
+
+# 3. Train the freshness MLP regressor
+uv run python -m models.freshness.train
+
+# 4. Run inference on a single image
+uv run python -c "
+from models.freshness import FreshnessInference
+engine = FreshnessInference('data/processed/freshness_best.pt')
+result = engine.predict('data/raw/freshapples/some_image.jpg')
+print(result)
+"
+```
+
+### Quickstart -- Portion Estimation
+
+```bash
+uv run python -c "
+from models.portion import PortionEstimator
+est = PortionEstimator()
+results = est.estimate('data/raw/freshapples/some_image.jpg')
+for r in results:
+    print(f'{r.label}: {r.estimated_grams}g +/- {r.uncertainty_grams}g')
+"
+```
+
+### Quickstart — Agent (Meal Planning)
+
+```python
+import asyncio
+from agent import run_agent
+from db.session import get_database
+
+async def main():
+    db = get_database()
+    result = await run_agent(user_id="user_001", db=db, meal_type="dinner")
+    for recipe in result["selected_plan"]:
+        print(f"{recipe['name']} — score: {recipe['_score']:.3f}")
+    print(f"Projected: {result['projected_macros']}")
+
+asyncio.run(main())
+```
+
+See `notebooks/04_agent_demo.ipynb` for a full walkthrough that runs
+entirely in-memory (no MongoDB required).
+
 ## Project Structure
 
 ```
@@ -93,8 +146,18 @@ NutriScan/
 │   ├── models.py         # Pydantic v2 document schemas
 │   └── session.py        # AsyncMongoClient manager
 ├── models/               # ML model definitions
-│   ├── freshness/        # CLIP → freshness MLP
-│   └── portion/          # Bounding-box → gram estimator
+│   ├── freshness/        # CLIP -> freshness MLP (Phase 1)
+│   │   ├── dataset.py    # FreshnessDataset (fresh/rotten labels)
+│   │   ├── extractor.py  # CLIPExtractor (frozen ViT-B/32)
+│   │   ├── model.py      # FreshnessRegressor (MLP + MC Dropout)
+│   │   ├── train.py      # Training script
+│   │   ├── inference.py  # FreshnessInference entry point
+│   │   └── preprocess.py # Batch CLIP embedding extraction
+│   └── portion/          # Bbox -> gram estimator (Phase 2)
+│       ├── categories.py # FoodMeta lookup table (10 categories)
+│       ├── reference.py  # Reference object calibration
+│       ├── estimator.py  # PortionEstimator (YOLO + geometry)
+│       └── pipeline.py   # PortionPipeline (freshness + grams)
 ├── data/                 # Datasets (git-ignored)
 │   ├── raw/
 │   └── processed/
@@ -112,9 +175,9 @@ NutriScan/
 | Phase | Description | Status |
 |-------|------------|--------|
 | **0** | Project scaffold, CI, Docker, schemas, health endpoint | ✅ Complete |
-| **1** | Freshness regression model (CLIP features → expiry) | ⬜ Pending |
-| **2** | Portion estimation pipeline (bbox → grams) | ⬜ Pending |
-| **3** | LangGraph agent (macro tracking, recipe scoring) | ⬜ Pending |
+| **1** | Freshness regression model (CLIP features → expiry) | ✅ Complete |
+| **2** | Portion estimation pipeline (bbox -> grams) | ✅ Complete |
+| **3** | LangGraph agent (macro tracking, recipe scoring) | ✅ Complete |
 | **4** | Full API routes + MongoDB CRUD | ⬜ Pending |
 | **5** | Integration tests, notebook demo, documentation | ⬜ Pending |
 

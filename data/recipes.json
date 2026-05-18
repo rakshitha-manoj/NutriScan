@@ -1,0 +1,242 @@
+[
+  {
+    "id": "r01",
+    "name": "Greek Yogurt Fruit Bowl",
+    "ingredients": [{"name": "greek yogurt", "grams": 200}, {"name": "banana", "grams": 120}, {"name": "strawberry", "grams": 80}, {"name": "honey", "grams": 15}],
+    "macros": {"calories": 310, "protein_g": 22, "carbs_g": 48, "fat_g": 5},
+    "tags": ["vegetarian", "high-protein", "breakfast", "quick"],
+    "uses_ingredients": ["banana", "strawberry"]
+  },
+  {
+    "id": "r02",
+    "name": "Apple Cinnamon Oatmeal",
+    "ingredients": [{"name": "oats", "grams": 80}, {"name": "apple", "grams": 150}, {"name": "cinnamon", "grams": 2}, {"name": "milk", "grams": 200}],
+    "macros": {"calories": 380, "protein_g": 14, "carbs_g": 62, "fat_g": 8},
+    "tags": ["vegetarian", "breakfast"],
+    "uses_ingredients": ["apple"]
+  },
+  {
+    "id": "r03",
+    "name": "Banana Peanut Butter Smoothie",
+    "ingredients": [{"name": "banana", "grams": 120}, {"name": "peanut butter", "grams": 32}, {"name": "milk", "grams": 250}, {"name": "honey", "grams": 10}],
+    "macros": {"calories": 420, "protein_g": 16, "carbs_g": 52, "fat_g": 18},
+    "tags": ["vegetarian", "breakfast", "quick"],
+    "uses_ingredients": ["banana"]
+  },
+  {
+    "id": "r04",
+    "name": "Grilled Chicken Broccoli Bowl",
+    "ingredients": [{"name": "chicken breast", "grams": 200}, {"name": "broccoli", "grams": 150}, {"name": "brown rice", "grams": 100}, {"name": "olive oil", "grams": 10}],
+    "macros": {"calories": 520, "protein_g": 52, "carbs_g": 42, "fat_g": 12},
+    "tags": ["high-protein", "lunch", "dinner"],
+    "uses_ingredients": ["broccoli"]
+  },
+  {
+    "id": "r05",
+    "name": "Tomato Cucumber Salad",
+    "ingredients": [{"name": "tomato", "grams": 200}, {"name": "cucumber", "grams": 150}, {"name": "olive oil", "grams": 15}, {"name": "feta cheese", "grams": 30}],
+    "macros": {"calories": 210, "protein_g": 6, "carbs_g": 12, "fat_g": 16},
+    "tags": ["vegetarian", "low-carb", "lunch", "quick"],
+    "uses_ingredients": ["tomato", "cucumber"]
+  },
+  {
+    "id": "r06",
+    "name": "Carrot Ginger Soup",
+    "ingredients": [{"name": "carrot", "grams": 300}, {"name": "onion", "grams": 100}, {"name": "ginger", "grams": 10}, {"name": "coconut milk", "grams": 100}],
+    "macros": {"calories": 250, "protein_g": 4, "carbs_g": 32, "fat_g": 12},
+    "tags": ["vegan", "lunch", "dinner"],
+    "uses_ingredients": ["carrot"]
+  },
+  {
+    "id": "r07",
+    "name": "Orange Chicken Stir-Fry",
+    "ingredients": [{"name": "chicken thigh", "grams": 200}, {"name": "orange", "grams": 120}, {"name": "soy sauce", "grams": 15}, {"name": "rice", "grams": 120}],
+    "macros": {"calories": 560, "protein_g": 40, "carbs_g": 58, "fat_g": 14},
+    "tags": ["high-protein", "dinner"],
+    "uses_ingredients": ["orange"]
+  },
+  {
+    "id": "r08",
+    "name": "Lemon Herb Salmon",
+    "ingredients": [{"name": "salmon fillet", "grams": 180}, {"name": "lemon", "grams": 50}, {"name": "asparagus", "grams": 120}, {"name": "olive oil", "grams": 10}],
+    "macros": {"calories": 450, "protein_g": 42, "carbs_g": 8, "fat_g": 28},
+    "tags": ["high-protein", "low-carb", "dinner"],
+    "uses_ingredients": ["lemon"]
+  },
+  {
+    "id": "r09",
+    "name": "Grape Walnut Spinach Salad",
+    "ingredients": [{"name": "spinach", "grams": 100}, {"name": "grape", "grams": 80}, {"name": "walnuts", "grams": 30}, {"name": "balsamic vinegar", "grams": 15}],
+    "macros": {"calories": 260, "protein_g": 8, "carbs_g": 22, "fat_g": 18},
+    "tags": ["vegetarian", "lunch", "quick"],
+    "uses_ingredients": ["grape"]
+  },
+  {
+    "id": "r10",
+    "name": "Strawberry Protein Shake",
+    "ingredients": [{"name": "strawberry", "grams": 150}, {"name": "protein powder", "grams": 30}, {"name": "milk", "grams": 250}, {"name": "banana", "grams": 60}],
+    "macros": {"calories": 320, "protein_g": 32, "carbs_g": 38, "fat_g": 4},
+    "tags": ["vegetarian", "high-protein", "snack", "quick"],
+    "uses_ingredients": ["strawberry", "banana"]
+  },
+  {
+    "id": "r11",
+    "name": "Broccoli Cheddar Frittata",
+    "ingredients": [{"name": "eggs", "grams": 200}, {"name": "broccoli", "grams": 120}, {"name": "cheddar", "grams": 40}, {"name": "milk", "grams": 50}],
+    "macros": {"calories": 400, "protein_g": 30, "carbs_g": 8, "fat_g": 28},
+    "tags": ["vegetarian", "high-protein", "low-carb", "breakfast"],
+    "uses_ingredients": ["broccoli"]
+  },
+  {
+    "id": "r12",
+    "name": "Cucumber Avocado Wrap",
+    "ingredients": [{"name": "tortilla", "grams": 60}, {"name": "cucumber", "grams": 100}, {"name": "avocado", "grams": 80}, {"name": "hummus", "grams": 40}],
+    "macros": {"calories": 380, "protein_g": 9, "carbs_g": 36, "fat_g": 24},
+    "tags": ["vegan", "lunch", "quick"],
+    "uses_ingredients": ["cucumber"]
+  },
+  {
+    "id": "r13",
+    "name": "Tomato Basil Pasta",
+    "ingredients": [{"name": "pasta", "grams": 120}, {"name": "tomato", "grams": 200}, {"name": "basil", "grams": 10}, {"name": "parmesan", "grams": 20}],
+    "macros": {"calories": 480, "protein_g": 18, "carbs_g": 72, "fat_g": 12},
+    "tags": ["vegetarian", "dinner", "lunch"],
+    "uses_ingredients": ["tomato"]
+  },
+  {
+    "id": "r14",
+    "name": "Carrot Sticks with Hummus",
+    "ingredients": [{"name": "carrot", "grams": 150}, {"name": "hummus", "grams": 60}],
+    "macros": {"calories": 180, "protein_g": 6, "carbs_g": 22, "fat_g": 8},
+    "tags": ["vegan", "snack", "quick"],
+    "uses_ingredients": ["carrot"]
+  },
+  {
+    "id": "r15",
+    "name": "Apple Walnut Salad",
+    "ingredients": [{"name": "mixed greens", "grams": 100}, {"name": "apple", "grams": 120}, {"name": "walnuts", "grams": 25}, {"name": "goat cheese", "grams": 30}],
+    "macros": {"calories": 290, "protein_g": 10, "carbs_g": 28, "fat_g": 16},
+    "tags": ["vegetarian", "lunch", "quick"],
+    "uses_ingredients": ["apple"]
+  },
+  {
+    "id": "r16",
+    "name": "Lemon Garlic Shrimp",
+    "ingredients": [{"name": "shrimp", "grams": 200}, {"name": "lemon", "grams": 40}, {"name": "garlic", "grams": 10}, {"name": "butter", "grams": 15}],
+    "macros": {"calories": 280, "protein_g": 42, "carbs_g": 4, "fat_g": 12},
+    "tags": ["high-protein", "low-carb", "dinner", "quick"],
+    "uses_ingredients": ["lemon"]
+  },
+  {
+    "id": "r17",
+    "name": "Banana Oat Pancakes",
+    "ingredients": [{"name": "banana", "grams": 120}, {"name": "oats", "grams": 60}, {"name": "eggs", "grams": 100}, {"name": "maple syrup", "grams": 20}],
+    "macros": {"calories": 390, "protein_g": 16, "carbs_g": 58, "fat_g": 10},
+    "tags": ["vegetarian", "breakfast"],
+    "uses_ingredients": ["banana"]
+  },
+  {
+    "id": "r18",
+    "name": "Grilled Tofu Vegetable Bowl",
+    "ingredients": [{"name": "tofu", "grams": 200}, {"name": "broccoli", "grams": 100}, {"name": "carrot", "grams": 80}, {"name": "soy sauce", "grams": 15}],
+    "macros": {"calories": 310, "protein_g": 28, "carbs_g": 18, "fat_g": 14},
+    "tags": ["vegan", "high-protein", "dinner"],
+    "uses_ingredients": ["broccoli", "carrot"]
+  },
+  {
+    "id": "r19",
+    "name": "Orange Cranberry Muffins",
+    "ingredients": [{"name": "flour", "grams": 150}, {"name": "orange", "grams": 100}, {"name": "cranberries", "grams": 60}, {"name": "sugar", "grams": 50}],
+    "macros": {"calories": 280, "protein_g": 5, "carbs_g": 52, "fat_g": 6},
+    "tags": ["vegetarian", "snack", "breakfast"],
+    "uses_ingredients": ["orange"]
+  },
+  {
+    "id": "r20",
+    "name": "Chicken Caesar Salad",
+    "ingredients": [{"name": "chicken breast", "grams": 150}, {"name": "romaine", "grams": 120}, {"name": "parmesan", "grams": 20}, {"name": "caesar dressing", "grams": 30}],
+    "macros": {"calories": 380, "protein_g": 42, "carbs_g": 8, "fat_g": 20},
+    "tags": ["high-protein", "low-carb", "lunch"],
+    "uses_ingredients": []
+  },
+  {
+    "id": "r21",
+    "name": "Strawberry Banana Overnight Oats",
+    "ingredients": [{"name": "oats", "grams": 60}, {"name": "strawberry", "grams": 100}, {"name": "banana", "grams": 80}, {"name": "almond milk", "grams": 200}],
+    "macros": {"calories": 340, "protein_g": 10, "carbs_g": 60, "fat_g": 6},
+    "tags": ["vegan", "breakfast"],
+    "uses_ingredients": ["strawberry", "banana"]
+  },
+  {
+    "id": "r22",
+    "name": "Beef and Broccoli Stir-Fry",
+    "ingredients": [{"name": "beef sirloin", "grams": 180}, {"name": "broccoli", "grams": 150}, {"name": "soy sauce", "grams": 15}, {"name": "rice", "grams": 120}],
+    "macros": {"calories": 550, "protein_g": 44, "carbs_g": 48, "fat_g": 16},
+    "tags": ["high-protein", "dinner"],
+    "uses_ingredients": ["broccoli"]
+  },
+  {
+    "id": "r23",
+    "name": "Cucumber Tomato Gazpacho",
+    "ingredients": [{"name": "cucumber", "grams": 200}, {"name": "tomato", "grams": 250}, {"name": "olive oil", "grams": 15}, {"name": "garlic", "grams": 5}],
+    "macros": {"calories": 190, "protein_g": 4, "carbs_g": 20, "fat_g": 12},
+    "tags": ["vegan", "lunch", "quick"],
+    "uses_ingredients": ["cucumber", "tomato"]
+  },
+  {
+    "id": "r24",
+    "name": "Grilled Chicken with Lemon Broccoli",
+    "ingredients": [{"name": "chicken breast", "grams": 200}, {"name": "broccoli", "grams": 150}, {"name": "lemon", "grams": 40}, {"name": "olive oil", "grams": 10}],
+    "macros": {"calories": 420, "protein_g": 52, "carbs_g": 10, "fat_g": 18},
+    "tags": ["high-protein", "low-carb", "dinner"],
+    "uses_ingredients": ["broccoli", "lemon"]
+  },
+  {
+    "id": "r25",
+    "name": "Tropical Fruit Salad",
+    "ingredients": [{"name": "orange", "grams": 120}, {"name": "banana", "grams": 100}, {"name": "grape", "grams": 80}, {"name": "lime juice", "grams": 10}],
+    "macros": {"calories": 210, "protein_g": 3, "carbs_g": 52, "fat_g": 1},
+    "tags": ["vegan", "snack", "quick"],
+    "uses_ingredients": ["orange", "banana", "grape"]
+  },
+  {
+    "id": "r26",
+    "name": "Egg and Tomato Scramble",
+    "ingredients": [{"name": "eggs", "grams": 150}, {"name": "tomato", "grams": 100}, {"name": "onion", "grams": 40}, {"name": "butter", "grams": 10}],
+    "macros": {"calories": 300, "protein_g": 20, "carbs_g": 8, "fat_g": 22},
+    "tags": ["vegetarian", "low-carb", "breakfast", "quick"],
+    "uses_ingredients": ["tomato"]
+  },
+  {
+    "id": "r27",
+    "name": "Quinoa Veggie Power Bowl",
+    "ingredients": [{"name": "quinoa", "grams": 100}, {"name": "cucumber", "grams": 80}, {"name": "tomato", "grams": 80}, {"name": "chickpeas", "grams": 80}],
+    "macros": {"calories": 420, "protein_g": 18, "carbs_g": 64, "fat_g": 8},
+    "tags": ["vegan", "high-protein", "lunch"],
+    "uses_ingredients": ["cucumber", "tomato"]
+  },
+  {
+    "id": "r28",
+    "name": "Apple Peanut Butter Snack",
+    "ingredients": [{"name": "apple", "grams": 150}, {"name": "peanut butter", "grams": 32}],
+    "macros": {"calories": 270, "protein_g": 8, "carbs_g": 30, "fat_g": 16},
+    "tags": ["vegetarian", "snack", "quick"],
+    "uses_ingredients": ["apple"]
+  },
+  {
+    "id": "r29",
+    "name": "Carrot and Lentil Curry",
+    "ingredients": [{"name": "carrot", "grams": 150}, {"name": "red lentils", "grams": 100}, {"name": "coconut milk", "grams": 100}, {"name": "curry paste", "grams": 20}],
+    "macros": {"calories": 440, "protein_g": 22, "carbs_g": 52, "fat_g": 14},
+    "tags": ["vegan", "dinner"],
+    "uses_ingredients": ["carrot"]
+  },
+  {
+    "id": "r30",
+    "name": "Strawberry Spinach Chicken Salad",
+    "ingredients": [{"name": "chicken breast", "grams": 150}, {"name": "spinach", "grams": 100}, {"name": "strawberry", "grams": 100}, {"name": "balsamic vinegar", "grams": 15}],
+    "macros": {"calories": 340, "protein_g": 40, "carbs_g": 16, "fat_g": 12},
+    "tags": ["high-protein", "lunch"],
+    "uses_ingredients": ["strawberry"]
+  }
+]
