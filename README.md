@@ -114,6 +114,26 @@ for r in results:
 "
 ```
 
+### Quickstart — Agent (Meal Planning)
+
+```python
+import asyncio
+from agent import run_agent
+from db.session import get_database
+
+async def main():
+    db = get_database()
+    result = await run_agent(user_id="user_001", db=db, meal_type="dinner")
+    for recipe in result["selected_plan"]:
+        print(f"{recipe['name']} — score: {recipe['_score']:.3f}")
+    print(f"Projected: {result['projected_macros']}")
+
+asyncio.run(main())
+```
+
+See `notebooks/04_agent_demo.ipynb` for a full walkthrough that runs
+entirely in-memory (no MongoDB required).
+
 ## Project Structure
 
 ```
@@ -157,7 +177,7 @@ NutriScan/
 | **0** | Project scaffold, CI, Docker, schemas, health endpoint | ✅ Complete |
 | **1** | Freshness regression model (CLIP features → expiry) | ✅ Complete |
 | **2** | Portion estimation pipeline (bbox -> grams) | ✅ Complete |
-| **3** | LangGraph agent (macro tracking, recipe scoring) | ⬜ Pending |
+| **3** | LangGraph agent (macro tracking, recipe scoring) | ✅ Complete |
 | **4** | Full API routes + MongoDB CRUD | ⬜ Pending |
 | **5** | Integration tests, notebook demo, documentation | ⬜ Pending |
 
