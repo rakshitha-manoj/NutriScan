@@ -29,6 +29,13 @@
 > near the 0.5 decision boundary, where the model is least confident
 > about the fresh/rotten classification.
 
+> **Why the metrics are so strong:** Labels are binary (1.0 = fresh,
+> 0.0 = rotten), so the task is effectively binary classification
+> reframed as regression. The strong metrics reflect the separability
+> of CLIP ViT-B/32 embeddings on this distribution, not a hard
+> regression problem. Uncertainty estimates from MC Dropout are
+> meaningful primarily near the decision boundary.
+
 ## Portion Estimation
 
 | Property | Value |
