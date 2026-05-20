@@ -59,5 +59,12 @@ data/processed/*
 # Notebooks checkpoints
 .ipynb_checkpoints/
 
+# Uploads
+data/raw/uploads/*
+
+# Gradio
+gradio_cached_examples/
+flagged/
+
 # Docker
 docker-compose.override.yml
