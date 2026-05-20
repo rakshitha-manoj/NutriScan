@@ -37,7 +37,6 @@ async def analyse_fridge(
     freshness: FreshnessDep,
 ) -> FridgeAnalyseResponse:
     """Analyse a fridge image: detect items, estimate portions & freshness."""
-    # Validate content type.
     if image.content_type not in _ALLOWED_CONTENT_TYPES:
         raise HTTPException(
             status_code=422,
@@ -47,7 +46,6 @@ async def analyse_fridge(
     if estimator is None:
         raise HTTPException(status_code=503, detail="Portion estimator unavailable.")
 
-    # Save uploaded file.
     _UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     suffix = ".jpg" if image.content_type == "image/jpeg" else ".png"
     tmp_path = _UPLOAD_DIR / f"{uuid.uuid4()}{suffix}"
@@ -62,10 +60,8 @@ async def analyse_fridge(
         )
         tmp_path.write_bytes(content)
 
-        # Run portion estimation.
         portions = estimator.estimate(str(tmp_path))
 
-        # Compute freshness for each detected item.
         items: list[DetectedItemResponse] = []
         detected_items: list[DetectedItem] = []
         ratio = 0.0
@@ -110,7 +106,6 @@ async def analyse_fridge(
                     )
                 )
 
-        # Persist to MongoDB.
         now = datetime.now(tz=UTC)
         fridge_doc = FridgeState(
             user_id=user_id,

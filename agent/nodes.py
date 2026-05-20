@@ -60,8 +60,6 @@ def filter_recipes(state: AgentState) -> dict[str, Any]:
     if profile is not None:
         restrictions = {r.lower() for r in profile.dietary_restrictions}
 
-    # Filter by dietary restrictions: if user is "vegetarian",
-    # keep recipes tagged "vegetarian" or "vegan".
     candidates: list[dict[str, Any]] = []
     for recipe in all_recipes:
         tags = {t.lower() for t in recipe.get("tags", [])}
@@ -69,8 +67,6 @@ def filter_recipes(state: AgentState) -> dict[str, Any]:
             continue
         candidates.append(recipe)
 
-    # Soft-sort by fridge ingredient overlap (prefer recipes using
-    # items the user actually has).
     fridge_items: set[str] = set()
     if fridge is not None:
         fridge_items = {item.name.lower() for item in fridge.detected_items}
@@ -124,7 +120,6 @@ def select_plan(state: AgentState) -> dict[str, Any]:
 
     selected = above[:_MIN_PLAN_SIZE]
 
-    # Compute projected macros.
     total_cal = sum(r.get("macros", {}).get("calories", 0) for r in selected)
     total_pro = sum(r.get("macros", {}).get("protein_g", 0) for r in selected)
     total_carb = sum(r.get("macros", {}).get("carbs_g", 0) for r in selected)

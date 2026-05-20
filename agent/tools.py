@@ -14,18 +14,13 @@ from typing import Any
 
 from db.models import FridgeState, MacroTargets, MealLog, MealType, UserProfile
 
-# ---------------------------------------------------------------------------
-# Async MongoDB helpers (called by run_agent, not by sync nodes)
-# ---------------------------------------------------------------------------
-
 _RECIPES_PATH = Path(__file__).resolve().parent.parent / "data" / "recipes.json"
 
 
 async def load_user_profile(user_id: str, db: Any) -> UserProfile:
     """Fetch a :class:`UserProfile` from MongoDB.
 
-    Raises:
-        ValueError: If no profile exists for *user_id*.
+    Raises ``ValueError`` if no profile exists for *user_id*.
     """
     doc = await db.user_profiles.find_one({"user_id": user_id})
     if doc is None:
@@ -38,8 +33,7 @@ async def load_user_profile(user_id: str, db: Any) -> UserProfile:
 async def load_fridge_state(user_id: str, db: Any) -> FridgeState:
     """Fetch the most recent :class:`FridgeState` for a user.
 
-    Raises:
-        ValueError: If no fridge state exists for *user_id*.
+    Raises ``ValueError`` if no fridge state exists for *user_id*.
     """
     cursor = db.fridge_states.find({"user_id": user_id}).sort("captured_at", -1)
     doc = await cursor.to_list(length=1)
@@ -90,16 +84,10 @@ async def persist_meal_log(
     await db.meal_logs.insert_one(log.model_dump())
 
 
-# ---------------------------------------------------------------------------
-# Synchronous computation helpers (called directly by graph nodes)
-# ---------------------------------------------------------------------------
-
-
 def load_recipes(path: Path | None = None) -> list[dict[str, Any]]:
     """Read and validate the local recipe corpus.
 
-    Raises:
-        FileNotFoundError: If the recipes file does not exist.
+    Raises ``FileNotFoundError`` if the recipes file does not exist.
     """
     rpath = path or _RECIPES_PATH
     if not rpath.exists():
@@ -143,9 +131,8 @@ def score_recipe(
 ) -> float:
     """Score a recipe against the macro deficit and fridge contents.
 
-    Returns:
-        A score in [0, 1] combining macro fit (70%) and freshness
-        bonus (30%).
+    Returns a score in ``[0, 1]`` combining macro fit (70%) and
+    freshness bonus (30%).
     """
     macros = recipe.get("macros", {})
     # Mean absolute relative error for each macro vs deficit.

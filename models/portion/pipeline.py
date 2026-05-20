@@ -24,15 +24,9 @@ if TYPE_CHECKING:
 class ProduceItem:
     """Merged result for a single detected food item.
 
-    Attributes:
-        label: Food category name.
-        bounding_box: Detection bounding box (x_min/y_min/x_max/y_max).
-        detection_confidence: YOLO confidence score.
-        estimated_grams: Estimated weight in grams.
-        uncertainty_grams: 1-sigma uncertainty on gram estimate.
-        freshness_score: 0.0 (rotten) to 1.0 (fresh).
-        freshness_uncertainty: Std from MC Dropout.
-        freshness_label: "fresh", "rotten", or "unknown".
+    Combines portion data (label, bounding box, grams, uncertainty)
+    with freshness data (score, uncertainty, label) from both the
+    YOLO and CLIP pipelines.
     """
 
     label: str
@@ -48,9 +42,8 @@ class ProduceItem:
 class PortionPipeline:
     """End-to-end pipeline: image -> detection + grams + freshness.
 
-    Args:
-        freshness_checkpoint: Path to a trained freshness model
-            checkpoint (``freshness_best.pt``).
+    Requires a trained freshness model checkpoint at
+    *freshness_checkpoint*.
     """
 
     def __init__(self, freshness_checkpoint: str | Path) -> None:
@@ -60,12 +53,9 @@ class PortionPipeline:
     def run(self, image_path: str | Path) -> list[ProduceItem]:
         """Run the full pipeline on a single image.
 
-        For each detected food item, crops the bounding box region
-        and runs freshness inference on it.
-
-        Returns:
-            List of :class:`ProduceItem` with portion and freshness
-            data merged.
+        For each detected food item, crops the bounding box region,
+        runs freshness inference, and returns a list of
+        :class:`ProduceItem` with portion and freshness data merged.
         """
         image_path = Path(image_path)
         portions = self._estimator.estimate(image_path)
@@ -83,7 +73,6 @@ class PortionPipeline:
             f_label = "unknown"
 
             try:
-                # Crop the bounding box region.
                 crop = img.crop(
                     (
                         int(bb.x_min),
@@ -93,7 +82,6 @@ class PortionPipeline:
                     )
                 )
 
-                # Save to a temp file for FreshnessInference.
                 with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
                     crop.save(tmp, format="JPEG")
                     tmp_path = Path(tmp.name)
@@ -103,7 +91,6 @@ class PortionPipeline:
                 f_unc = pred.uncertainty
                 f_label = pred.label
 
-                # Clean up temp file.
                 tmp_path.unlink(missing_ok=True)
             except Exception:  # noqa: BLE001
                 pass  # fallback to defaults

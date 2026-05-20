@@ -25,9 +25,8 @@ _DROPOUT_2 = 0.2
 class FreshnessRegressor(nn.Module):
     """MLP regression head mapping CLIP embeddings to freshness scores.
 
-    Args:
-        input_dim: Dimensionality of input embeddings (default 512).
-        device: Device for the model (default ``"cpu"``).
+    Takes *input_dim*-dimensional embeddings (default 512) and produces
+    a scalar in ``[0, 1]``. Runs on *device* (default ``"cpu"``).
     """
 
     def __init__(
@@ -52,14 +51,7 @@ class FreshnessRegressor(nn.Module):
         self.to(device)
 
     def forward(self, x: Tensor) -> Tensor:
-        """Forward pass.
-
-        Args:
-            x: Input tensor of shape ``(B, input_dim)``.
-
-        Returns:
-            Freshness scores of shape ``(B, 1)`` in ``[0, 1]``.
-        """
+        """Map input embeddings ``(B, input_dim)`` to scores ``(B, 1)`` in ``[0, 1]``."""
         result: Tensor = self.network(x)
         return result
 
@@ -71,14 +63,7 @@ class FreshnessRegressor(nn.Module):
         """MC Dropout inference for uncertainty estimation.
 
         Enables dropout at eval time, runs *n_passes* stochastic forward
-        passes, and returns the mean and standard deviation.
-
-        Args:
-            x: Input tensor of shape ``(B, input_dim)``.
-            n_passes: Number of Monte Carlo forward passes.
-
-        Returns:
-            Tuple of ``(mean, std)`` tensors, each of shape ``(B, 1)``.
+        passes, and returns ``(mean, std)`` tensors of shape ``(B, 1)``.
         """
         # Enable dropout layers while keeping batchnorm in eval mode.
         for module in self.modules():
@@ -94,7 +79,6 @@ class FreshnessRegressor(nn.Module):
         mean = stacked.mean(dim=0)
         std = stacked.std(dim=0)
 
-        # Restore eval mode.
         self.eval()
 
         return mean, std

@@ -23,7 +23,6 @@ async def _lifespan(app: FastAPI) -> AsyncIterator[None]:
     db_name = os.getenv("MONGODB_DB_NAME", "nutriscan")
     await db_manager.connect(url=mongo_url, db_name=db_name)
 
-    # Ensure uploads directory exists.
     Path("data/raw/uploads").mkdir(parents=True, exist_ok=True)
 
     try:

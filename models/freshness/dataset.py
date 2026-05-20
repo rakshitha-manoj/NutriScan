@@ -45,11 +45,8 @@ def _clip_transform() -> transforms.Compose:
 def _parse_label_and_category(folder_name: str) -> tuple[float, str]:
     """Extract (label, category) from a folder name like ``freshapples``.
 
-    Returns:
-        (1.0, "apples") for fresh, (0.0, "apples") for rotten.
-
-    Raises:
-        ValueError: If *folder_name* does not start with 'fresh' or 'rotten'.
+    Returns ``(1.0, "apples")`` for fresh and ``(0.0, "apples")`` for
+    rotten. Raises ``ValueError`` if *folder_name* starts with neither.
     """
     lower = folder_name.lower()
     if lower.startswith("fresh"):
@@ -63,9 +60,8 @@ def _parse_label_and_category(folder_name: str) -> tuple[float, str]:
 class FreshnessDataset(Dataset):  # type: ignore[type-arg]
     """Image dataset for freshness regression.
 
-    Args:
-        root: Directory containing ``fresh*``/``rotten*`` sub-folders.
-        split: One of ``"train"``, ``"val"``, ``"test"``.
+    Expects *root* to contain ``fresh*``/``rotten*`` sub-folders.
+    *split* must be one of ``"train"``, ``"val"``, ``"test"``.
     """
 
     def __init__(self, root: str | Path, split: str = "train") -> None:
@@ -77,7 +73,6 @@ class FreshnessDataset(Dataset):  # type: ignore[type-arg]
         self.split = split
         self.transform = _clip_transform()
 
-        # Collect all (image_path, label, category) tuples.
         all_samples: list[tuple[Path, float, str]] = []
         for subdir in sorted(self.root.iterdir()):
             if not subdir.is_dir():
@@ -91,7 +86,6 @@ class FreshnessDataset(Dataset):  # type: ignore[type-arg]
                 if img_path.suffix.lower() in _IMAGE_EXTENSIONS:
                     all_samples.append((img_path, label, category))
 
-        # Deterministic split.
         rng = random.Random(_SEED)
         rng.shuffle(all_samples)
 

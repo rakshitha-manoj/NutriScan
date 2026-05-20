@@ -27,13 +27,9 @@ _ASPECT_UNCERTAINTY_SCALE: float = 0.3
 class PortionEstimate:
     """Result for a single detected food item.
 
-    Attributes:
-        label: Food category name.
-        bounding_box: Detection bounding box (x_min/y_min/x_max/y_max).
-        detection_confidence: YOLO confidence score.
-        estimated_grams: Estimated weight in grams.
-        uncertainty_grams: 1-sigma uncertainty on the gram estimate.
-        pixel_to_cm2_ratio: Conversion ratio used (for auditability).
+    Includes the food label, bounding box, YOLO confidence, estimated
+    weight in grams, 1-sigma uncertainty, and the pixel-to-cm² ratio
+    used for the estimate.
     """
 
     label: str
@@ -77,22 +73,17 @@ class PortionEstimator:
     ) -> list[PortionEstimate]:
         """Run detection and portion estimation on a single image.
 
-        Args:
-            image_path: Path to a JPEG/PNG image.
-            confidence_threshold: Minimum YOLO confidence to keep.
-
-        Returns:
-            List of :class:`PortionEstimate` for each recognised food.
+        Accepts a path to a JPEG/PNG *image_path* and filters detections
+        below *confidence_threshold*. Returns a list of
+        :class:`PortionEstimate` for each recognised food item.
         """
         image_path = Path(image_path)
         img = Image.open(image_path)
         img_w, img_h = img.size
 
-        # Run YOLO inference.
         yolo = self._get_yolo()
         results = yolo(str(image_path), verbose=False)
 
-        # Collect all detected boxes with their labels.
         all_labels: list[str] = []
         all_boxes: list[BoundingBox] = []
         all_confs: list[float] = []
@@ -112,11 +103,9 @@ class PortionEstimator:
                 all_boxes.append(bbox)
                 all_confs.append(conf)
 
-        # Calibrate pixel-to-cm2 ratio.
         ref_area = detect_reference_object(all_boxes, all_labels)
         ratio = estimate_pixel_to_cm2_ratio(ref_area, img_w, img_h)
 
-        # Estimate portions for recognised food items.
         estimates: list[PortionEstimate] = []
         for bbox, conf, label in zip(all_boxes, all_confs, all_labels, strict=True):
             category_key = YOLO_LABEL_TO_CATEGORY.get(label.lower())
@@ -133,7 +122,6 @@ class PortionEstimator:
             volume_cm3 = area_cm2 * meta.typical_height_cm
             grams = volume_cm3 * meta.density_g_per_cm3
 
-            # Sanity clamp.
             max_grams = meta.grams_per_unit * 1.5
             grams = max(1.0, min(grams, max_grams))
 

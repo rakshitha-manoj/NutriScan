@@ -17,14 +17,9 @@ from pathlib import Path
 
 import kagglehub
 
-# ---------------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------------
-
 _DATASET_HANDLE = "sriramr/fruits-fresh-and-rotten-for-classification"
 _DEFAULT_RAW_DIR = Path("data/raw")
 
-# Minimum expected sub-directories after a successful download.
 _EXPECTED_PREFIXES = ("fresh", "rotten")
 
 

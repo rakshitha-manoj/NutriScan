@@ -39,14 +39,14 @@ class MongoDBManager:
         url: str = _DEFAULT_MONGO_URL,
         db_name: str = _DEFAULT_DB_NAME,
     ) -> None:
-        """Open the async MongoDB connection."""
+        """Open the connection and verify the database handle is ready."""
         logger.info("Connecting to MongoDB at %s (db=%s)", url, db_name)
         self._client = AsyncMongoClient(url)
         self._db = self._client[db_name]
         logger.info("MongoDB connection established.")
 
     async def disconnect(self) -> None:
-        """Close the async MongoDB connection."""
+        """Shut down the client and release all resources."""
         if self._client is not None:
             await self._client.close()
             self._client = None
@@ -56,8 +56,7 @@ class MongoDBManager:
     def get_database(self) -> AsyncDatabase:  # type: ignore[type-arg]
         """Return the current database handle.
 
-        Raises:
-            RuntimeError: If called before ``connect()``.
+        Raises ``RuntimeError`` if called before ``connect()``.
         """
         if self._db is None:
             raise RuntimeError("MongoDB is not connected. Call connect() first.")

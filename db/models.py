@@ -13,10 +13,6 @@ from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
-# ---------------------------------------------------------------------------
-# Embedded sub-models
-# ---------------------------------------------------------------------------
-
 
 class BoundingBox(BaseModel):
     """Axis-aligned bounding box in pixel coordinates."""
@@ -77,11 +73,6 @@ class MacroTargets(BaseModel):
     protein_g: float = Field(default=50.0, ge=0.0, description="Daily protein target (g)")
     carbs_g: float = Field(default=250.0, ge=0.0, description="Daily carbohydrate target (g)")
     fat_g: float = Field(default=70.0, ge=0.0, description="Daily fat target (g)")
-
-
-# ---------------------------------------------------------------------------
-# Top-level document models
-# ---------------------------------------------------------------------------
 
 
 class FridgeState(BaseModel):

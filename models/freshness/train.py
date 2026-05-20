@@ -22,9 +22,6 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from models.freshness.model import FreshnessRegressor
 
-# ---------------------------------------------------------------------------
-# Reproducibility
-# ---------------------------------------------------------------------------
 _SEED = 42
 random.seed(_SEED)
 np.random.seed(_SEED)  # noqa: NPY002
@@ -32,9 +29,6 @@ torch.manual_seed(_SEED)
 if torch.cuda.is_available():
     torch.cuda.manual_seed_all(_SEED)
 
-# ---------------------------------------------------------------------------
-# Hyperparameters
-# ---------------------------------------------------------------------------
 _LR = 1e-3
 _WEIGHT_DECAY = 1e-4
 _EPOCHS = 50

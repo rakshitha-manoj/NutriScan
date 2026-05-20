@@ -13,12 +13,8 @@ from dataclasses import dataclass
 class FoodMeta:
     """Metadata for a food category used in portion estimation.
 
-    Attributes:
-        yolo_label: COCO class label that YOLOv8 assigns.
-        density_g_per_cm3: Approximate food density.
-        typical_height_cm: Typical height/thickness of one unit.
-        expected_aspect_ratio: Typical bbox width/height ratio.
-        grams_per_unit: Weight of one typical unit (sanity bound).
+    Stores the YOLO label, approximate density, typical height,
+    expected aspect ratio, and weight of one typical unit.
     """
 
     yolo_label: str
@@ -31,7 +27,6 @@ class FoodMeta:
 # Densities from USDA FoodData Central (fdc.nal.usda.gov).
 # Heights and aspect ratios from standard produce sizing guides.
 FOOD_CATEGORIES: dict[str, FoodMeta] = {
-    # --- Phase 1 categories (dataset-matched) ---
     "apple": FoodMeta(
         yolo_label="apple",
         density_g_per_cm3=0.85,  # USDA: ~0.8-0.9 g/cm3
@@ -53,7 +48,6 @@ FOOD_CATEGORIES: dict[str, FoodMeta] = {
         expected_aspect_ratio=1.0,  # roughly spherical
         grams_per_unit=131.0,  # USDA: 1 medium orange
     ),
-    # --- Stretch entries (common fridge items) ---
     "carrot": FoodMeta(
         yolo_label="carrot",
         density_g_per_cm3=1.04,

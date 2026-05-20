@@ -19,9 +19,7 @@ _EMBED_DIM = 512
 class CLIPExtractor:
     """Extract frozen CLIP visual embeddings.
 
-    Args:
-        device: Device to run on (``"cpu"`` or ``"cuda"``).
-            Defaults to CUDA if available, else CPU.
+    Uses *device* for computation (defaults to CUDA if available).
     """
 
     def __init__(self, device: str | None = None) -> None:
@@ -34,7 +32,6 @@ class CLIPExtractor:
         self.model.to(self.device)
         self.model.eval()
 
-        # Freeze all parameters.
         for param in self.model.parameters():
             param.requires_grad = False
 
@@ -42,11 +39,8 @@ class CLIPExtractor:
     def extract(self, images: Tensor) -> Tensor:
         """Return L2-normalised 512-dim embeddings for a batch of images.
 
-        Args:
-            images: Preprocessed image batch of shape ``(B, 3, 224, 224)``.
-
-        Returns:
-            Float32 tensor of shape ``(B, 512)``, L2-normalised per row.
+        Expects a preprocessed image batch of shape ``(B, 3, 224, 224)``
+        and returns a float32 tensor of shape ``(B, 512)``.
         """
         images = images.to(self.device)
         features: Tensor = self.model(images)
