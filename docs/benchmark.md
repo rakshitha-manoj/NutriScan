@@ -18,11 +18,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Test MAE | *Run `notebooks/05_evaluation.ipynb` to fill* |
-| Test RMSE | *Run notebook* |
-| Accuracy @ 0.5 | *Run notebook* |
-| Naive baseline MAE (predict 0.5) | *Run notebook* |
-| Improvement over baseline | *Run notebook* |
+| Test MAE | 0.0025 |
+| Test RMSE | 0.0348 |
+| Accuracy @ 0.5 | 99.85% |
+| Naive baseline MAE (predict 0.5) | 0.5000 |
+| Improvement over baseline | 99.5% |
 
 > **Note on uncertainty:** MC Dropout (20 forward passes with dropout
 > enabled) provides an uncertainty estimate. This is most meaningful

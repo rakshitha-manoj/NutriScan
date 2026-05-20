@@ -4,7 +4,7 @@ End-to-end AI system that scans fridge photos, estimates food freshness and port
 
 ## What It Does
 
-- **Freshness regression** — CLIP ViT-B/32 frozen features → MLP regressor with MC Dropout uncertainty estimates (test MAE: *run `notebooks/05_evaluation.ipynb` to fill*)
+- **Freshness regression** — CLIP ViT-B/32 frozen features → MLP regressor with MC Dropout uncertainty estimates (test MAE: 0.0025)
 - **Portion estimation** — YOLOv8n detection → geometric depth proxy → gram estimates with reference-object calibration
 - **Meal planning agent** — 7-node LangGraph state machine scoring 30 recipes against macro deficit and fridge freshness
 
@@ -104,7 +104,7 @@ NutriScan/
 
 | Bullet | Implementation | Key Metric |
 |--------|---------------|------------|
-| Freshness regression | CLIP ViT-B/32 + MLP | Test MAE: *run notebook* |
+| Freshness regression | CLIP ViT-B/32 + MLP | Test MAE: 0.0025 |
 | Portion estimation | YOLOv8n + geometric depth proxy | Qualitative |
 | LangGraph agent | 7-node state machine | 30-recipe corpus |
 
