@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -11,9 +12,8 @@ if TYPE_CHECKING:
 
 from fastapi import FastAPI
 
+from api.routes import fridge_router, health_router, plan_router
 from db.session import db_manager
-
-_VERSION = "0.1.0"
 
 
 @asynccontextmanager
@@ -22,6 +22,10 @@ async def _lifespan(app: FastAPI) -> AsyncIterator[None]:
     mongo_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017")
     db_name = os.getenv("MONGODB_DB_NAME", "nutriscan")
     await db_manager.connect(url=mongo_url, db_name=db_name)
+
+    # Ensure uploads directory exists.
+    Path("data/raw/uploads").mkdir(parents=True, exist_ok=True)
+
     try:
         yield
     finally:
@@ -35,18 +39,13 @@ def create_app() -> FastAPI:
         description=(
             "Agentic Nutrition Planner — fridge scanning, freshness estimation, and meal planning."
         ),
-        version=_VERSION,
+        version="0.1.0",
         lifespan=_lifespan,
     )
 
-    @application.get("/health")
-    async def health() -> dict[str, str]:
-        """Liveness / readiness probe."""
-        return {
-            "status": "healthy",
-            "version": _VERSION,
-            "db": "connected" if db_manager.is_connected else "disconnected",
-        }
+    application.include_router(health_router)
+    application.include_router(fridge_router)
+    application.include_router(plan_router)
 
     return application
 

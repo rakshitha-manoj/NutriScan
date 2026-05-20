@@ -178,8 +178,33 @@ NutriScan/
 | **1** | Freshness regression model (CLIP features → expiry) | ✅ Complete |
 | **2** | Portion estimation pipeline (bbox -> grams) | ✅ Complete |
 | **3** | LangGraph agent (macro tracking, recipe scoring) | ✅ Complete |
-| **4** | Full API routes + MongoDB CRUD | ⬜ Pending |
+| **4** | Full API routes + MongoDB CRUD | ✅ Complete |
 | **5** | Integration tests, notebook demo, documentation | ⬜ Pending |
+
+## API Reference
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Service health check |
+| POST | `/fridge/analyse` | Analyse a fridge image |
+| POST | `/plan/daily` | Generate a daily meal plan |
+
+### curl examples
+
+```bash
+# Health check
+curl http://localhost:8000/health
+
+# Analyse a fridge image
+curl -X POST http://localhost:8000/fridge/analyse \
+  -F "image=@path/to/fridge.jpg" \
+  -F "user_id=user_001"
+
+# Generate a daily meal plan
+curl -X POST http://localhost:8000/plan/daily \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": "user_001", "meal_type": "dinner"}'
+```
 
 ## License
 
