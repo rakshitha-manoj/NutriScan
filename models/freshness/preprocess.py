@@ -96,7 +96,6 @@ def preprocess() -> None:
             f"embedding shape {tuple(embeddings.shape)}"
         )
 
-    # Save category mapping.
     sorted_cats = sorted(all_categories)
     cat_map = {i: name for i, name in enumerate(sorted_cats)}
     cat_path = processed_dir / "category_names.json"

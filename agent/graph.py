@@ -65,15 +65,10 @@ async def run_agent(
 ) -> dict[str, Any]:
     """Async entry point: pre-fetch DB data, run graph, persist results.
 
-    Args:
-        user_id: Target user identifier.
-        db: An async MongoDB database handle.
-        meal_type: Default meal type for logged recipes.
-
-    Returns:
-        The final :class:`AgentState` after graph execution.
+    Fetches the user's profile, latest fridge state, and today's meal
+    logs from *db*, invokes the synchronous planning graph, and persists
+    any selected recipes as meal logs. Returns the final agent state.
     """
-    # Pre-fetch all DB data asynchronously.
     profile = None
     fridge = None
     logs: list[Any] = []
@@ -112,7 +107,6 @@ async def run_agent(
     graph = build_graph()
     result: dict[str, Any] = graph.invoke(initial_state)
 
-    # Persist meal logs if no errors.
     if not result.get("error"):
         for recipe in result.get("selected_plan", []):
             with contextlib.suppress(Exception):

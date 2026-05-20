@@ -10,10 +10,6 @@ from datetime import datetime  # noqa: TC003 — Pydantic needs at runtime
 
 from pydantic import BaseModel, Field
 
-# ---------------------------------------------------------------------------
-# /health
-# ---------------------------------------------------------------------------
-
 
 class HealthResponse(BaseModel):
     """Response for ``GET /health``."""
@@ -21,11 +17,6 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     db: str
-
-
-# ---------------------------------------------------------------------------
-# /fridge/analyse
-# ---------------------------------------------------------------------------
 
 
 class DetectedItemResponse(BaseModel):
@@ -49,11 +40,6 @@ class FridgeAnalyseResponse(BaseModel):
     items: list[DetectedItemResponse]
     pixel_to_cm2_ratio: float
     message: str
-
-
-# ---------------------------------------------------------------------------
-# /plan/daily
-# ---------------------------------------------------------------------------
 
 
 class MealPlanRequest(BaseModel):

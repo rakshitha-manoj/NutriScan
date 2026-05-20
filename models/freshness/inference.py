@@ -30,11 +30,10 @@ _CLIP_STD = (0.26862954, 0.26130258, 0.27577711)
 class FreshnessPrediction:
     """Result of a single freshness prediction.
 
-    Attributes:
-        freshness_score: 0.0 (rotten) to 1.0 (fresh).
-        uncertainty: Standard deviation from MC Dropout.
-        label: ``"fresh"`` if score ≥ 0.5, else ``"rotten"``.
-        confidence: ``1.0 - uncertainty``, clipped to ``[0, 1]``.
+    ``freshness_score`` ranges from 0.0 (rotten) to 1.0 (fresh).
+    ``uncertainty`` is the standard deviation from MC Dropout.
+    ``label`` is ``"fresh"`` if score >= 0.5, else ``"rotten"``.
+    ``confidence`` is ``1.0 - uncertainty``, clipped to ``[0, 1]``.
     """
 
     freshness_score: float
@@ -56,15 +55,12 @@ def _build_transform() -> transforms.Compose:
 
 
 class FreshnessInference:
-    """End-to-end freshness inference: image → CLIP → MLP → prediction.
+    """End-to-end freshness inference: image -> CLIP -> MLP -> prediction.
 
-    Args:
-        checkpoint_path: Path to a ``freshness_best.pt`` checkpoint.
-        device: Compute device (default: auto-detect).
-        n_mc_passes: Number of Monte Carlo Dropout passes for uncertainty.
-
-    Raises:
-        ValueError: If *checkpoint_path* does not exist.
+    Loads a trained checkpoint from *checkpoint_path*, runs on *device*
+    (auto-detected by default), and uses *n_mc_passes* MC Dropout
+    forward passes for uncertainty estimation. Raises ``ValueError``
+    if the checkpoint file does not exist.
     """
 
     def __init__(
@@ -85,7 +81,6 @@ class FreshnessInference:
         self.n_mc_passes = n_mc_passes
         self.transform = _build_transform()
 
-        # Load checkpoint and rebuild model.
         checkpoint = torch.load(ckpt_path, map_location=device, weights_only=True)
         config: dict[str, int] = checkpoint["config"]
         self.model = FreshnessRegressor(
@@ -95,27 +90,21 @@ class FreshnessInference:
         self.model.load_state_dict(checkpoint["model_state_dict"])
         self.model.eval()
 
-        # CLIP feature extractor.
         self.extractor = CLIPExtractor(device=device)
 
     def predict(self, image_path: str | Path) -> FreshnessPrediction:
         """Run inference on a single image.
 
-        Args:
-            image_path: Path to a JPEG/PNG image file.
-
-        Returns:
-            :class:`FreshnessPrediction` with score, uncertainty, label,
-            and confidence.
+        Accepts a path to a JPEG/PNG file and returns a
+        :class:`FreshnessPrediction` with score, uncertainty, label,
+        and confidence.
         """
         image = Image.open(image_path).convert("RGB")
         tensor = self.transform(image).unsqueeze(0)  # (1, 3, 224, 224)
 
-        # Extract CLIP embedding.
         embedding = self.extractor.extract(tensor)  # (1, 512)
         embedding = embedding.to(self.device)
 
-        # MC Dropout prediction.
         mean, std = self.model.predict_with_uncertainty(embedding, n_passes=self.n_mc_passes)
 
         score = float(mean.item())

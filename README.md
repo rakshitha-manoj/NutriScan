@@ -1,12 +1,17 @@
 # 🥗 NutriScan — Agentic Nutrition Planner
 
-End-to-end AI system that scans fridge photos, estimates food freshness and portions, and plans meals using a stateful LangGraph agent — all behind a production-grade FastAPI service.
+End-to-end AI system that scans fridge photos, estimates food
+freshness and portions, and plans meals using a stateful LangGraph
+agent — all behind a production-grade FastAPI service.
 
 ## What It Does
 
-- **Freshness regression** — CLIP ViT-B/32 frozen features → MLP regressor with MC Dropout uncertainty estimates (test MAE: 0.0025)
-- **Portion estimation** — YOLOv8n detection → geometric depth proxy → gram estimates with reference-object calibration
-- **Meal planning agent** — 7-node LangGraph state machine scoring 30 recipes against macro deficit and fridge freshness
+- **Freshness regression** — CLIP ViT-B/32 frozen features → MLP
+  regressor with MC Dropout uncertainty (test MAE: 0.0025)
+- **Portion estimation** — YOLOv8n detection → geometric depth
+  proxy → gram estimates with reference-object calibration
+- **Meal planning agent** — 7-node LangGraph state machine scoring
+  30 recipes against macro deficit and fridge freshness
 
 ## Architecture
 
@@ -72,7 +77,9 @@ curl http://localhost:8000/health
 uv run python demo.py
 ```
 
-Two-tab Gradio interface: **Fridge Analyser** (upload image → portions + freshness) and **Meal Planner** (offline recipe scoring, no MongoDB required).
+Two-tab Gradio interface: **Fridge Analyser** (upload image →
+portions + freshness) and **Meal Planner** (offline recipe scoring,
+no MongoDB required).
 
 ## Project Structure
 
@@ -108,18 +115,9 @@ NutriScan/
 | Portion estimation | YOLOv8n + geometric depth proxy | Qualitative |
 | LangGraph agent | 7-node state machine | 30-recipe corpus |
 
-See [`docs/benchmark.md`](docs/benchmark.md) and [`notebooks/05_evaluation.ipynb`](notebooks/05_evaluation.ipynb) for full evaluation.
-
-## Phase Checklist
-
-| Phase | Description | Status |
-|-------|------------|--------|
-| **0** | Project scaffold, CI, Docker, schemas, health endpoint | ✅ |
-| **1** | Freshness regression model (CLIP features → expiry) | ✅ |
-| **2** | Portion estimation pipeline (bbox → grams) | ✅ |
-| **3** | LangGraph agent (macro tracking, recipe scoring) | ✅ |
-| **4** | Full API routes + MongoDB CRUD | ✅ |
-| **5** | Evaluation, benchmark report, Gradio demo | ✅ |
+See [`docs/benchmark.md`](docs/benchmark.md) and
+[`notebooks/05_evaluation.ipynb`](notebooks/05_evaluation.ipynb)
+for full evaluation.
 
 ## License
 

@@ -1,4 +1,4 @@
-"""Health check route — extracted from api/main.py."""
+"""Health-check endpoint."""
 
 from __future__ import annotations
 

@@ -10,10 +10,6 @@ from db.session import db_manager
 
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
-# Lazy singletons (created on first access, not at import time)
-# ---------------------------------------------------------------------------
-
 _freshness_instance: Any = None
 _freshness_loaded: bool = False
 

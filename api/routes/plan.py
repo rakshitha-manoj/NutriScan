@@ -36,7 +36,6 @@ async def daily_plan(
             raise HTTPException(status_code=404, detail=error)
         raise HTTPException(status_code=422, detail=error)
 
-    # Map selected plan to response schema.
     recipes = [
         ScoredRecipe(
             id=r.get("id", ""),
